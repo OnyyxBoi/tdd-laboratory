@@ -30,4 +30,15 @@ describe('Laboratory Add to Stock', () => {
         lab.add('Iron', 5.5);
         expect(lab.getQuantity('Iron')).toBe(15.5);
     });
+
+    test('should throw error if adding an unknown substance', () => {
+        const lab = new Laboratory(['Iron']);
+        expect(() => lab.add('Gold', 10)).toThrow();
+    });
+
+    test('should throw error if quantity is invalid (negative or not a number)', () => {
+        const lab = new Laboratory(['Iron']);
+        expect(() => lab.add('Iron', -5)).toThrow();
+        expect(() => lab.add('Iron', '10')).toThrow();
+    });
 });
