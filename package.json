@@ -1,0 +1,14 @@
+{
+  "name": "tdd-laboratory",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/OnyyxBoi/tdd-laboratory.git",
+  "author": "TeoL <teo.ladouche@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
