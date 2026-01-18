@@ -3,7 +3,6 @@ class Laboratory {
         if (!Array.isArray(substances)) {
             throw new Error("Substances must be an array");
         }
-
         if (!substances.every(s => typeof s === 'string')) {
             throw new Error("All substances must be strings");
         }
@@ -16,6 +15,10 @@ class Laboratory {
 
     getQuantity(substance) {
         return this.stock[substance];
+    }
+
+    add(substance, quantity) {
+        this.stock[substance] += quantity;
     }
 }
 
