@@ -42,3 +42,20 @@ describe('Laboratory Add to Stock', () => {
         expect(() => lab.add('Iron', '10')).toThrow();
     });
 });
+
+describe('Laboratory Reactions', () => {
+    test('should initialize with reactions', () => {
+        const substances = ['Iron', 'Carbon'];
+        const reactions = {
+            'Steel': [{ substance: 'Iron', quantity: 1 }, { substance: 'Carbon', quantity: 0.1 }]
+        };
+        
+        const lab = new Laboratory(substances, reactions);
+        expect(lab).toBeDefined();
+    });
+
+    test('should throw error if reactions is not a proper object', () => {
+        const substances = ['Iron'];
+        expect(() => new Laboratory(substances, 'invalid')).toThrow();
+    });
+});
