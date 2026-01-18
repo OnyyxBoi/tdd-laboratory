@@ -121,4 +121,26 @@ describe('Laboratory Make Product', () => {
         expect(lab.getQuantity('Iron')).toBe(0);
         expect(lab.getQuantity('Carbon')).toBe(9.8);
     });
+
+    test('should use a product as an ingredient for another reaction', () => {
+        const substances = ['A'];
+        const reactions = {
+            'Intermediate': [{ substance: 'A', quantity: 1 }],
+            'Final': [{ substance: 'Intermediate', quantity: 1 }]
+        };
+        const lab = new Laboratory(substances, reactions);
+
+        lab.add('A', 10);
+        
+        // 1. Make the intermediate product
+        lab.make('Intermediate', 5);
+        expect(lab.getQuantity('Intermediate')).toBe(5);
+        
+        // 2. Use the intermediate to make the final product
+        const produced = lab.make('Final', 2);
+        
+        expect(produced).toBe(2);
+        expect(lab.getQuantity('Final')).toBe(2);
+        expect(lab.getQuantity('Intermediate')).toBe(3); // 5 - 2
+    });
 });
