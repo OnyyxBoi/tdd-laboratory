@@ -43,6 +43,42 @@ class Laboratory {
 
         this.stock[substance] += quantity;
     }
+
+    make(productName, quantity) {
+        if (!this.reactions.hasOwnProperty(productName)) {
+            throw new Error(`Product '${productName}' is unknown or has no reaction defined`);
+        }
+        if (typeof quantity !== 'number' || quantity < 0) {
+            throw new Error("Quantity must be a positive number");
+        }
+
+        const ingredients = this.reactions[productName];
+        let producedQuantity = quantity;
+
+        for (const ingredient of ingredients) {
+            const availableStock = this.getQuantity(ingredient.substance);
+            const requiredPerUnit = ingredient.quantity;
+            
+            const maxProducible = availableStock / requiredPerUnit;
+            
+            if (maxProducible < producedQuantity) {
+                producedQuantity = maxProducible;
+            }
+        }
+
+        if (producedQuantity > 0) {
+            for (const ingredient of ingredients) {
+                this.stock[ingredient.substance] -= (producedQuantity * ingredient.quantity);
+            }
+
+            if (!this.stock.hasOwnProperty(productName)) {
+                this.stock[productName] = 0;
+            }
+            this.stock[productName] += producedQuantity;
+        }
+
+        return producedQuantity;
+    }
 }
 
 module.exports = Laboratory;
