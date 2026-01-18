@@ -19,3 +19,15 @@ describe('Laboratory Initialization', () => {
         expect(() => new Laboratory(invalidSubstances)).toThrow();
     });
 });
+
+describe('Laboratory Add to Stock', () => {
+    test('should add quantity to an existing substance', () => {
+        const lab = new Laboratory(['Iron']);
+        
+        lab.add('Iron', 10);
+        expect(lab.getQuantity('Iron')).toBe(10);
+        
+        lab.add('Iron', 5.5);
+        expect(lab.getQuantity('Iron')).toBe(15.5);
+    });
+});
