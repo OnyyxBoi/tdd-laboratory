@@ -18,6 +18,14 @@ class Laboratory {
     }
 
     add(substance, quantity) {
+        if (!this.stock.hasOwnProperty(substance)) {
+            throw new Error(`Substance '${substance}' is unknown`);
+        }
+
+        if (typeof quantity !== 'number' || quantity < 0) {
+            throw new Error("Quantity must be a positive number");
+        }
+
         this.stock[substance] += quantity;
     }
 }
