@@ -78,3 +78,47 @@ describe('Laboratory Reactions', () => {
         expect(() => lab.add('Gold', 10)).toThrow();
     });
 });
+
+describe('Laboratory Make Product', () => {
+    test('should produce product if ingredients are available', () => {
+        const substances = ['Iron', 'Carbon'];
+        const reactions = {
+            'Steel': [
+                { substance: 'Iron', quantity: 1 },
+                { substance: 'Carbon', quantity: 0.1 }
+            ]
+        };
+        const lab = new Laboratory(substances, reactions);
+
+        lab.add('Iron', 10);
+        lab.add('Carbon', 10);
+
+        const produced = lab.make('Steel', 5);
+
+        expect(produced).toBe(5);
+        expect(lab.getQuantity('Steel')).toBe(5);
+        expect(lab.getQuantity('Iron')).toBe(5);
+        expect(lab.getQuantity('Carbon')).toBe(9.5);
+    });
+
+    test('should limit production based on limiting reagent', () => {
+        const substances = ['Iron', 'Carbon'];
+        const reactions = {
+            'Steel': [
+                { substance: 'Iron', quantity: 1 },
+                { substance: 'Carbon', quantity: 0.1 }
+            ]
+        };
+        const lab = new Laboratory(substances, reactions);
+
+        lab.add('Iron', 2);
+        lab.add('Carbon', 10);
+
+        const produced = lab.make('Steel', 5);
+
+        expect(produced).toBe(2);
+        expect(lab.getQuantity('Steel')).toBe(2);
+        expect(lab.getQuantity('Iron')).toBe(0);
+        expect(lab.getQuantity('Carbon')).toBe(9.8);
+    });
+});
