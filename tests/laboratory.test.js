@@ -58,4 +58,23 @@ describe('Laboratory Reactions', () => {
         const substances = ['Iron'];
         expect(() => new Laboratory(substances, 'invalid')).toThrow();
     });
+
+    test('should allow adding a product defined in reactions', () => {
+        const substances = ['Iron', 'Carbon'];
+        const reactions = {
+            'Steel': [{ substance: 'Iron', quantity: 1 }]
+        };
+        const lab = new Laboratory(substances, reactions);
+
+        lab.add('Steel', 5);
+        expect(lab.getQuantity('Steel')).toBe(5);
+    });
+
+    test('should still throw error for completely unknown things', () => {
+        const substances = ['Iron'];
+        const reactions = { 'Steel': [] };
+        const lab = new Laboratory(substances, reactions);
+
+        expect(() => lab.add('Gold', 10)).toThrow();
+    });
 });
